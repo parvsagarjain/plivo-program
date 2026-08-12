@@ -13,8 +13,23 @@
 | `llm-service` | Wk2 D1 — LLM calls, streaming, function calling |
 | `speech-service` | Wk2 D2 — Deepgram + ElevenLabs |
 | `voice-agent` | Wk2 D3–7 — the AI receptionist, on Railway |
+| `plivo-program` | **This file.** Program-level documentation only |
 
-All five are private repos under `github.com/parvsagarjain`, all pushed.
+All six are private repos under `github.com/parvsagarjain`, all pushed.
+
+**This document is version-controlled** (added 2026-08-12). `~/plivo` is a git
+repo whose `.gitignore` excludes the five project folders — they have their own
+remotes and nesting them would create submodule confusion for no benefit.
+
+The program-brief screenshots (`WhatsApp Image *.jpeg`) are **ignored by
+default**: they are personal photos not reviewed for whatever else is in frame.
+Delete the `*.jpeg` line from `.gitignore` to include them and make this
+document self-contained.
+
+Checked for credentials before the first push. The only match was the Twilio
+Account SID in the support-ticket draft, which is an identifier, not a secret.
+**Do not paste auth tokens, API keys or connection strings into this file** —
+it is now on GitHub.
 
 ---
 
@@ -907,8 +922,41 @@ clean. Both deployments live and answering.
    who know what to say; an outsider will find things this session could not.
 3. **Rotate six credentials** — OpenAI, Deepgram, ElevenLabs, Neon, Upstash,
    ngrok. All passed through a chat transcript. **OpenAI first**: it is the
-   only one that spends money directly.
-4. Optional: **rate-limit the agent.** See the risk below.
+   only one that spends money directly. Also still outstanding: delete the
+   dead Twilio API key from Day 2.
+
+   Rotating Neon or Upstash means updating the value in **three** places —
+   `voice-agent/.env`, Railway (`railway variables --set`), and Vercel
+   (`vercel env add … --force`) — then redeploying both. Easy to do two and
+   wonder why something broke.
+4. **Decide on commit attribution** (see below).
+5. Optional: **rate-limit the agent.** See the risk below.
+
+### Commit attribution — an open decision
+
+Every commit across all six repos ends with:
+
+```
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+```
+
+**This grants nobody access.** Checked on 2026-08-12: `parvsagarjain` is the
+only collaborator on all six repos. Claude Code runs `git` and `gh` as the
+user, with the user's credentials; there is no Anthropic account involved and
+`noreply@anthropic.com` is not a real one. GitHub simply renders the trailer as
+a second avatar, which makes it look like more than it is.
+
+**Undecided:** whether to keep it. Three options —
+
+1. Leave it. Accurate, and the program's whole premise is that Claude wrote the
+   code.
+2. Stop adding it to future commits. Costs nothing.
+3. Strip it from history too — `filter-branch`/`rebase` plus a force-push
+   across six repos. Every hash changes and the old history on GitHub is
+   destroyed. Only worth it if the attribution genuinely misrepresents the
+   work.
+
+Worth deciding before a supervisor reads the repos.
 
 ### ⚠️ The number is public, unauthenticated and attached to paid APIs
 
