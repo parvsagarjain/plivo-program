@@ -1,0 +1,20 @@
+# The five project folders are their own git repos with their own remotes.
+# This repo is only the program-level documentation.
+twilio-health-checker/
+call-service/
+llm-service/
+speech-service/
+voice-agent/
+plivo-health-checker/
+
+# Source screenshots of the program brief. Ignored by default because they are
+# personal photos that have not been reviewed for anything else in frame —
+# remove these two lines if you want the handoff to be self-contained.
+*.jpeg
+*.jpg
+*.png
+
+# Never
+.env
+*.key
+.DS_Store
